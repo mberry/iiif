@@ -8,15 +8,10 @@ mod parameters;
 use utils::*;
 use bytes::Bytes;
 pub use api::*;
+pub use request::*;
+pub use response::*;
 pub use parameters::*;
 pub use reqwest::{Client, Url};
-
-
-pub struct InfoResponse {
-  pub status_code: u16,
-  pub info: String
-}
-
 
 #[cfg(test)]
 mod tests {
