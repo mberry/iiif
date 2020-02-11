@@ -1,0 +1,15 @@
+[package]
+name = "iiif"
+version = "0.1.0"
+authors = ["Mitchell <17392435+MitchellBerry@users.noreply.github.com>"]
+edition = "2018"
+description = "A client library for the International Image Interoperability Framework (IIIF)"
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = "0.10.1"
+tokio = {version = "0.2.4",  features=["full"] } 
+bytes = "0.5.4"
+
