@@ -1,13 +1,15 @@
 use iiif::*;
 use reqwest::Client;
 
+// Writing an image to file.
+
 // Example image
 //https://ids.lib.harvard.edu/ids/iiif/25286607/full/500,/0/default.jpg
 
 
 #[tokio::main]
 async fn main() {
-  // Basic Image API struct same server
+  // Basic Image API struct
   let mut api  = Image::new("https://ids.lib.harvard.edu");
   
   // Create a common client to reuse requests with
@@ -15,6 +17,7 @@ async fn main() {
   
   // Set image info
   // Vector of optional prefixes
+  // You can either set the prefix/es in the server field or here
   api.prefixes = vec!("ids".into(), "iiif".into());
   
   // Image identifier
@@ -26,7 +29,7 @@ async fn main() {
   // Set size: width 500 pixels
   api.size = Size::W(500);
 
-  //Rotation default: Rotation::N(0.0)
+  // Rotation default: Rotation::N(0.0)
 
   // Quality and Format: default.jpg
   
