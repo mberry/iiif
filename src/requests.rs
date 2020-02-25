@@ -1,5 +1,5 @@
 use super::*;
-use response::*;
+// use responses::*;
 
 impl Image {
   pub async fn request(self, client: &Client) -> Response {
@@ -24,9 +24,9 @@ impl Image {
     let response = client.get(uri).send().await.unwrap();
     let status_code = response.status().as_u16();
     dbg!{&response};
-    let info  = match status_code {
-      200 => response.text().await.expect("Info payload"),
-      _ => String::new()
+    let info: Info  = match status_code {
+      200 => response.json().await.expect("Info payload"),
+      _ => Info::default()
     };
     InfoResponse {
       status_code,
