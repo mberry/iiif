@@ -183,7 +183,7 @@ impl ToString for Format {
   }
 }
 
-// Defaults image settings
+// Default image settings
 impl Default for Region {
   fn default() -> Self { Region::Full }
 }
