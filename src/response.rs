@@ -2,6 +2,8 @@ use bytes::Bytes;
 use std::fs::File;
 use std::io::prelude::*;
 
+/// Generic response struct
+#[derive(Clone, Debug)]
 pub struct Response {
   pub status_code: u16,
   pub image: Bytes
