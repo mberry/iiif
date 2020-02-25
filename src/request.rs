@@ -18,7 +18,7 @@ impl Image {
     }
   }
 
-  pub async fn info_request(self, client: &Client) -> InfoResponse {
+  pub async fn request_info(self, client: &Client) -> InfoResponse {
     let parts = self.build_info_parts();
     let uri = self.build_uri(parts);
     let response = client.get(uri).send().await.unwrap();
@@ -32,5 +32,15 @@ impl Image {
       status_code,
       info
     }
+  }
+
+  pub async fn fetch(self) -> Response {
+    let client = reqwest::Client::new();
+    self.request(&client).await
+  }
+
+  pub async fn fetch_info(self) -> InfoResponse {
+    let client = reqwest::Client::new();
+    self.request_info(&client).await
   }
 }
