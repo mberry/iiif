@@ -1,5 +1,4 @@
 use iiif::*;
-use reqwest::Client;
 
 // Writing an image to file.
 

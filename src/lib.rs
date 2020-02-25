@@ -13,6 +13,7 @@ pub use response::*;
 pub use parameters::*;
 pub use reqwest::{Client, Url};
 
+
 #[cfg(test)]
 mod tests {
   use super::*;
