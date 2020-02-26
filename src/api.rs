@@ -1,4 +1,4 @@
-// use super::*;
+//! The main Image API 
 use crate::parameters::*;
 
 #[derive(Default, Debug, Clone, PartialEq)]
@@ -47,13 +47,13 @@ impl Image {
     self.identifier = identifier.into()
   }
 
-  /// Sets the current image region to full, this is the default and unecessary 
+  /// Sets the current image region to full, this is the default and unnecessary 
   /// for a newly created Image struct
   pub fn full_region(&mut self) {
     self.region = Region::Full;
   }
 
-  /// Sets theregion is defined as an area where the width and height are both equal to the length of the shorter dimension of the complete image. The region may be positioned anywhere in the longer dimension of the image content at the server’s discretion, and centered is often a reasonable default.
+  /// Sets the region is defined as an area where the width and height are both equal to the length of the shorter dimension of the complete image. The region may be positioned anywhere in the longer dimension of the image content at the server’s discretion, and centered is often a reasonable default.
   pub fn square_region(&mut self) {
     self.region = Region::Square;
   }
@@ -110,7 +110,7 @@ impl Image {
     self.rotation = Rotation::Normal(90.0);
   }
 
-  /// Seets the image to be rotated 270 degrees
+  /// Sets the image to be rotated 270 degrees
   pub fn rotate_left(&mut self) {
     self.rotation = Rotation::Normal(270.0);
   }
