@@ -1,45 +1,56 @@
+//! Contains the various request functions for the Image struct
 use super::*;
-// use responses::*;
+use std::error::Error;
+use crate::errors::*;
+
 
 impl Image {
-  pub async fn request(self, client: &Client) -> Response {
+  /// Makes an asynchronous request with the current parameters using a reusable 
+  /// http client and returns a response struct containing a byte array of the 
+  /// image. This method is recommended for anything beyond making a few 
+  /// requests as it can take advantage of keep-alive pooling.
+  pub async fn request(self, client: &Client) -> Result<Response, Box<dyn Error>> {
     let parts = self.build_parts();
-    let uri = self.build_uri(parts);
-    let response = client.get(uri).send().await.unwrap();
+    let url = self.build_uri(parts);
+    let response = client.get(url.clone())
+                          .send().await
+                          .expect("GET request");
     let status_code = response.status().as_u16();
-    dbg!{&response};
-    let image  = match status_code {
-      200 => response.bytes().await.expect("Image payload"),
-      _ => Bytes::new()
-    };
-    Response {
-      status_code,
-      image
+    let image = response.bytes().await.expect("Getting image payload");
+    match status_code {
+      200..=299 =>  Ok(Response{status_code, url, image}),
+      _ => Err(Box::new(ResponseError::new(status_code)))
     }
   }
 
-  pub async fn request_info(self, client: &Client) -> InfoResponse {
+  /// Makes an asynchronous request with the current parameters using a reusable 
+  /// http client and returns both the raw json string along with the deserialized 
+  /// InfoResponse struct which has numerous helper methods.
+  /// This function is recommended for anything beyond making a few 
+  /// requests as it can take advantage of keep-alive pooling.
+  pub async fn request_info(self, client: &Client) -> Result<InfoResponse, Box<dyn Error>> {
     let parts = self.build_info_parts();
-    let uri = self.build_uri(parts);
-    let response = client.get(uri).send().await.unwrap();
+    let url = self.build_uri(parts);
+    let response = client.get(url.clone()).send().await.unwrap();
     let status_code = response.status().as_u16();
     dbg!{&response};
-    let info: Info  = match status_code {
-      200 => response.json().await.expect("Info payload"),
-      _ => Info::default()
-    };
-    InfoResponse {
-      status_code,
-      info
+    match status_code {
+      200..=299 => {
+        let raw_json = response.text().await.unwrap();
+        let info = serde_json::from_str(&raw_json).unwrap();
+        Ok(InfoResponse{status_code, info, raw_json, url})
+      }
+        _ => Err(Box::new(ResponseError::new(status_code)))
     }
   }
 
-  pub async fn fetch(self) -> Response {
+  /// A convenience function that wraps around request.
+  pub async fn fetch(self) -> Result<Response, Box<dyn Error>> {
     let client = reqwest::Client::new();
     self.request(&client).await
   }
 
-  pub async fn fetch_info(self) -> InfoResponse {
+  pub async fn fetch_info(self) ->  Result<InfoResponse, Box<dyn Error>> {
     let client = reqwest::Client::new();
     self.request_info(&client).await
   }
