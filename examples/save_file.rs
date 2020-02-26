@@ -17,7 +17,8 @@ async fn main() {
   // Create a common client to reuse requests with
   let client = Client::new();
   
-  // Set image info
+  // Set image info, directly modifying the api struct rather than using the 
+  // helper methods.
   // Vector of optional prefixes
   // You can either set the prefix/es in the server field or here
   api.prefixes = vec!["ids".into(), "iiif".into()];
@@ -32,7 +33,7 @@ async fn main() {
   api.size = Size::W(200);
 
   // Make request
-  let response = api.request(&client).await;
+  let response = api.request(&client).await.expect("Requesting image");
 
   // Save image to file foo.jpg
   response.write_to_file("foo.jpg")
