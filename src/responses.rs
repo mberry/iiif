@@ -27,7 +27,7 @@ impl Response {
   /// Writes the image response to a file at the specified relative or absolute path
   /// 
   ///  # Example
-  /// ```rust,no_run
+  /// ```rust,ignore
   /// use iiif::*;
   /// let client = Client::new();
   /// let mut api = Image::new("https://ids.lib.harvard.edu/ids/iiif/");

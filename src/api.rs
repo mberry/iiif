@@ -18,7 +18,7 @@ impl Image {
   /// + prefixes. The host argument requires the full base url with the scheme 
   /// included. 
   ///
-  /// ```rust,no_test
+  /// ```rust,ignore
   /// use iiif::*;
   /// 
   /// // Including prefixes upfront
