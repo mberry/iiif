@@ -1,4 +1,5 @@
-use super::*;
+//! Contains objects representing image parameters
+use crate::utils::*;
 
 /// The region parameter defines the rectangular portion of the 
 /// full image to be returned. Region can be specified by pixel coordinates, 
