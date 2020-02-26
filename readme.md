@@ -35,13 +35,15 @@ response.write_to_file("foo.jpg")
 let client = Client::new();
 let base = "https://ids.lib.harvard.edu/ids/iiif";
 let mut images: Vec<Bytes> = Vec::new();
+
 // Iterate through some images
-for i in 25286607u32..25286617 {
+let ids = ["25286607", "25286608", "25286609"];
+for id in ids {
   let mut api = Image::new(base);
-  api.identifier(&i.to_string());
+  api.identifier(id);
   let response = api.request(&client)
                     .await
                     .unwrap();
-  images.push(response.image)
+  images.push(response.image);
 }
 ```
