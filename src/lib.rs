@@ -11,5 +11,6 @@ pub use api::*;
 pub use requests::*;
 pub use responses::*;
 pub use parameters::*;
+pub use bytes::Bytes;
 pub use reqwest::{Client, Url};
 
