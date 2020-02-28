@@ -13,10 +13,10 @@ impl Image {
     let parts = self.build_parts();
     let url = self.build_uri(parts);
     let response = client.get(url.clone())
-                          .send().await
-                          .expect("GET request");
+                          .send()
+                          .await?;
     let status_code = response.status().as_u16();
-    let image = response.bytes().await.expect("Getting image payload");
+    let image = response.bytes().await?;
     match status_code {
       200..=299 =>  Ok(Response{status_code, url, image}),
       _ => Err(Box::new(ResponseError::new(status_code)))
@@ -31,13 +31,14 @@ impl Image {
   pub async fn request_info(self, client: &Client) -> Result<InfoResponse, Box<dyn Error>> {
     let parts = self.build_info_parts();
     let url = self.build_uri(parts);
-    let response = client.get(url.clone()).send().await.unwrap();
+    let response = client.get(url.clone())
+                          .send()
+                          .await?;
     let status_code = response.status().as_u16();
-    dbg!{&response};
     match status_code {
       200..=299 => {
-        let raw_json = response.text().await.unwrap();
-        let info = serde_json::from_str(&raw_json).unwrap();
+        let raw_json = response.text().await?;
+        let info = serde_json::from_str(&raw_json)?;
         Ok(InfoResponse{status_code, info, raw_json, url})
       }
         _ => Err(Box::new(ResponseError::new(status_code)))
