@@ -7,7 +7,7 @@ For now only contains the Image API.
 ### Install
 ```toml
 [dependencies]
-iiif = "0.1.0"
+iiif = "0.1.1"
 ```
 
 ### Usage
