@@ -1,6 +1,6 @@
 [package]
 name = "iiif"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Mitchell Berry <17392435+MitchellBerry@users.noreply.github.com>"]
 edition = "2018"
 description = "A client library for the International Image Interoperability Framework (IIIF)"
