@@ -45,5 +45,4 @@ for id in ids {
                     .await
                     .unwrap();
   images.push(response.image);
-}
 ```
